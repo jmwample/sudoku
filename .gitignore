@@ -1,0 +1,6 @@
+sudoku
+build/
+*.o
+*.swp
+*.swo
+.gitignore
