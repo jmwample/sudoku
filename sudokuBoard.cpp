@@ -17,10 +17,10 @@ void sudokuBoard::displayBoard(ostream& out) const {
     
       // print number
       out << " ";
-      //if (current_board[i][j] != -1) 
+      if (current_board[i][j] != -1) 
         out << current_board[i][j];
-     /* else            
-        out << " ";   */
+      else            
+        out << " ";   
         
       // Print divider  
       if ( ( j%3 == 2 ) && ( j!=8 ) )
@@ -57,10 +57,10 @@ int sudokuBoard::update() {
 int InfoPtr[3] = {-1, -1, -1};  // Make this a refference to the array
   getUpdate(InfoPtr);
   
-  updateBoard(InfoPtr[0], InfoPtr[1], InfoPtr[2]);
-
   cout << "\033[1;31m"<<InfoPtr[0]<<" "<<InfoPtr[1]<<" ";
   cout<<InfoPtr[2]<<"\033[0m\n"<<endl;
+
+  updateBoard(InfoPtr[0], InfoPtr[1], InfoPtr[2]);
 
   return 1;
 }
@@ -187,7 +187,6 @@ int* sudokuBoard::getUpdate(int arrayPtr[3]) {
     cout << "New value: ";
     cin >> arrayPtr[2];
   }
-
 
   return arrayPtr;
 }                
