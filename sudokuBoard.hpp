@@ -7,7 +7,8 @@
  */
 
 #include <iostream>
-#include <queue>
+#include <algorithm>
+#include <vector>
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
@@ -55,6 +56,9 @@ public:
 
 
   void newBoard();
+
+
+  void populateBoard();
 
 
   int actions();

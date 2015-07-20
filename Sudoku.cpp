@@ -28,7 +28,6 @@ int main(int argc, char *argv[]) {
   
   //try a few updates
   while (true) {
-    //boardPtr->update( );
     if ( !boardPtr->actions( ) ) {
       cout << "Error in actions" << endl;
       return EXIT_FAILURE;
