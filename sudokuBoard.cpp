@@ -70,10 +70,10 @@ void sudokuBoard::newBoard() {
 int* sudokuBoard::getUpdate(int arrayPtr[3]) {
 
   // Get the updated x position for the update
-  cout << "\033[1;32m" << "New position (X): ";
+  cout << "New position (X): ";
   cin >> arrayPtr[0];
   while ( (arrayPtr[0] > 9) || (arrayPtr[0] < 0) ) {
-    cout << "Out of Bounds, please re-enter"<< endl;
+    cout << "\033[1;31mOut of Bounds, please re-enter\033[0m"<< endl;
     cout << "New position (X): ";
     cin >> arrayPtr[0];
   }
@@ -82,7 +82,7 @@ int* sudokuBoard::getUpdate(int arrayPtr[3]) {
   cout << "New position (Y): ";
   cin >> arrayPtr[1];
   while ( (arrayPtr[1] > 9) || (arrayPtr[1] < 0) ) {
-    cout << "Out of Bounds, please re-enter"<< endl;
+    cout << "\033[1;31mOut of Bounds, please re-enter\033[0m"<< endl;
     cout << "New position (Y): ";
     cin >> arrayPtr[1];
   }
@@ -91,12 +91,11 @@ int* sudokuBoard::getUpdate(int arrayPtr[3]) {
   cout << "New Value: ";
   cin >> arrayPtr[2];
   while ( (arrayPtr[2] > 9) || (arrayPtr[2] < 1) ) {
-    cout << "Out of Bounds, please re-enter"<< endl;
+    cout << "\033[1;31mOut of Bounds, please re-enter\033[0m"<< endl;
     cout << "New value: ";
     cin >> arrayPtr[2];
   }
 
-  cout << "\033[0m";
 
   return arrayPtr;
 }                
@@ -105,25 +104,33 @@ int* sudokuBoard::getUpdate(int arrayPtr[3]) {
 int sudokuBoard::actions() {
   int option;
   cout<<"\033[1;34m(1)Update  (2)Check  (3)New Puzzle  (4)Exit\033[0m" << endl;
-  cout<<"Actions: ";
+  cout<<"Action: ";
   cin >> option;
 
   switch(option) {
     case(1):
-        cout << "\n\033[1;32mAdding Update\033[0m"<<endl;
-        //wait(3);
-        return update();
+        cout << endl;
+        if ( !update() )    
+            return EXIT_FAILURE;
+        cout << "\033[1;32mAdding Update\033[0m"<<endl;
+        sleep(2);
         break;
     case(2): 
         cout << "\n\033[1;32mChecking solution\033[0m"<<endl;
+        sleep(2);
         break;
     case(3):
         cout << "\n\033[1;32mNew puzzle\033[0m"<<endl;
+        sleep(2);
         break;
     case(4):
         cout << "\n\033[1;32mExiting... \033[0m" << endl;
+        sleep(2);
+        break;
     default: 
-        cout << "\n\033[1;31Incorrect option entered! Try again\033[0m" << endl;
+        cout << "\n\033[1;31Incorrect option entered! Try again\033[0m\n\n" << endl;
+        return actions();
+        break;
   }
   return true;
 }

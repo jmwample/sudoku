@@ -10,6 +10,7 @@
 #include <queue>
 #include <stdlib.h>
 #include <stdio.h>
+#include <unistd.h>
 
 #define BOARDSIZE 9
 

@@ -8,7 +8,6 @@
  */ 
 
 #include "sudokuBoard.hpp"
-#include "sudokuHelper.hpp"
 #include <fstream>  // For reading and writing from files
 #include <iostream>
 
