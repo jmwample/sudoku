@@ -18,10 +18,12 @@ void sudokuBoard::displayBoard(ostream& out) const {
   out << "\033[1;34m        1   2   3    4   5   6    7   8   9  \033[0m" << endl;
   out << "       ___ ___ ___  ___ ___ ___  ___ ___ ___ " << endl;
   for (int i=0; i< BOARDSIZE; i++) {
-    if (i == 4) 
+    if (i == 4) {
       out << "\033[1;34m-Y- " << 1+i << " \033[0m";
-    else
+    }
+    else  {
       out << "\033[1;34m    " << 1+i << " \033[0m";
+    }
     out << "|";      
     for (int j=0; j< BOARDSIZE; j++) {
     
@@ -115,15 +117,15 @@ void sudokuBoard::displayStart(ostream& out) const {
 /*----------------------------[ New Board ]---------------------------------*/
 
 void sudokuBoard::newBoard() {
-  // simple random generator
+  /* simple random generator
   for (int i=0; i<BOARDSIZE; i++) {
     for (int j=0; j<BOARDSIZE; j++) {
       current_board[i][j] = rand() % 11 - 1;
     }
-  } 
+  }*/ 
 
   // Robust generator
-  //populateBoard();
+  populateBoard();
   if ( isSolvable() ) {
     isCreated = true;
     isSolved = true;
@@ -149,12 +151,7 @@ void sudokuBoard::populateBoard() {
 
   for (int i=1; i<10; ++i) nums.push_back(i); // 1 2 3 4 5 6 7 8 9
 
-  random_shuffle ( nums.begin(), nums.end(), myrandom );
-
-  // test output for shuffled numbers
-  for (vector<int>::iterator it=nums.begin(); it!=nums.end(); ++it)
-     cout << ' ' << *it;
-  cout << endl;
+  //random_shuffle ( nums.begin(), nums.end(), myrandom );
 
   for (int i=0; i<3; i++) {
     for (int j=0; j<3; j++) {
@@ -166,46 +163,59 @@ void sudokuBoard::populateBoard() {
   current_board[0][0]=current_board[3][2]=current_board[6][1]=
     current_board[2][3]=current_board[5][5]=current_board[8][4]=
     current_board[1][6]=current_board[4][8]=current_board[7][7] = temp[0][0]; 
+  cout << "temp[0][0]  " << temp[0][0] << endl;
 
   // (0,1) x   
   current_board[1][0]=current_board[4][2]=current_board[7][1]=
     current_board[0][3]=current_board[3][5]=current_board[6][4]=
     current_board[2][6]=current_board[5][8]=current_board[8][7] = temp[0][1]; 
+  cout << "temp[0][1]  " << temp[0][1] << endl;
         
   // (0,2) x   
-  current_board[2][0]=current_board[5][2]=current_board[5][1]=
+  current_board[2][0]=current_board[5][2]=current_board[8][1]=
     current_board[1][3]=current_board[4][5]=current_board[7][4]=
     current_board[0][6]=current_board[3][8]=current_board[6][7] = temp[0][2]; 
+  cout << "temp[0][2]  " << temp[0][2] << endl;
         
   // (1,0) x   
   current_board[0][1]=current_board[3][0]=current_board[6][2]=
     current_board[2][4]=current_board[5][3]=current_board[8][5]=
     current_board[1][7]=current_board[4][6]=current_board[7][8] = temp[1][0]; 
+  cout << "temp[1][0]  " << temp[1][0] << endl;
         
   // (1,1) x   
   current_board[1][1]=current_board[4][0]=current_board[7][2]=
     current_board[0][4]=current_board[3][3]=current_board[6][5]=
     current_board[2][7]=current_board[5][6]=current_board[8][8] = temp[1][1]; 
+  cout << "temp[1][1]  " << temp[1][1] << endl;
         
+  cout <<  "Current_board14 - " << current_board[1][4] << endl;
   // (1,2) x   
-  current_board[2][1]=current_board[5][0]=current_board[8][2]=
-    current_board[4][3]=current_board[7][5]=current_board[1][4]=
-    current_board[0][7]=current_board[3][6]=current_board[6][8] = temp[1][2]; 
+  current_board[2][1]=current_board[5][0]=current_board[8][2]=  
+    current_board[4][3]=current_board[7][5]=current_board[0][7]=
+    current_board[3][6]=current_board[1][4]=current_board[6][8] = temp[1][2];
+  cout << "temp[1][2]  " << temp[1][2] << endl;
+  cout <<  "Current_board14 - " << current_board[1][4] << endl;
+  cout << "Current_board18 - " << current_board[1][8] << endl;
         
   // (2,0) x   
-  current_board[0][2]=current_board[3][1]=current_board[6][0]=
+  current_board[0][2]=current_board[3][1]=current_board[6][0]=      
     current_board[2][5]=current_board[5][4]=current_board[8][3]=
-    current_board[4][7]=current_board[7][6]=current_board[1][8]= temp[2][0]; 
+    current_board[4][7]=current_board[7][6]=current_board[1][8] = temp[2][0];
+  cout << "temp[2][0]  " << temp[2][0] << endl;
+  cout <<"Current_board18 - " << current_board[1][8] << endl;
         
   // (2,1) x   
-  current_board[1][2]=current_board[4][2]=current_board[7][0]=
+  current_board[1][2]=current_board[4][1]=current_board[7][0]=
     current_board[0][5]=current_board[3][4]=current_board[6][3]=
     current_board[2][8]=current_board[5][7]=current_board[8][6] = temp[2][1]; 
+  cout << "temp[2][1]  " << temp[2][1] << endl;
         
   // (2,2) x   
   current_board[2][2]=current_board[5][1]=current_board[8][0]=
     current_board[1][5]=current_board[4][4]=current_board[7][3]=
     current_board[0][8]=current_board[3][7]=current_board[6][6] = temp[2][2]; 
+  cout << "temp[2][2]  " << temp[2][2] << endl;
   
 
   for (int i=0; i < BOARDSIZE; i++) {

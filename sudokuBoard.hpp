@@ -42,7 +42,7 @@ public:
   sudokuBoard() {
     for (int i=0; i<BOARDSIZE; i++){
       for (int j=0; j<BOARDSIZE; j++) {
-        current_board[i][j] = -1;
+        current_board[i][j] = 0;
       }
     }
   }
