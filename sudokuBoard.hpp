@@ -33,9 +33,13 @@ private:
 
   int* getUpdate(int arrayPtr[3]);
 
+  int getDifficulty();
+
   int isSolvable(); 
     
   void updateBoard(int value, int PosX, int PosY);
+
+  void obfuscateBoard();
 
 public:
     

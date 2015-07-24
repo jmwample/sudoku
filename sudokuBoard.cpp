@@ -117,15 +117,10 @@ void sudokuBoard::displayStart(ostream& out) const {
 /*----------------------------[ New Board ]---------------------------------*/
 
 void sudokuBoard::newBoard() {
-  /* simple random generator
-  for (int i=0; i<BOARDSIZE; i++) {
-    for (int j=0; j<BOARDSIZE; j++) {
-      current_board[i][j] = rand() % 11 - 1;
-    }
-  }*/ 
 
   // Robust generator
   populateBoard();
+  obfuscateBoard();
   if ( isSolvable() ) {
     isCreated = true;
     isSolved = true;
@@ -151,7 +146,7 @@ void sudokuBoard::populateBoard() {
 
   for (int i=1; i<10; ++i) nums.push_back(i); // 1 2 3 4 5 6 7 8 9
 
-  //random_shuffle ( nums.begin(), nums.end(), myrandom );
+  random_shuffle ( nums.begin(), nums.end(), myrandom );
 
   for (int i=0; i<3; i++) {
     for (int j=0; j<3; j++) {
@@ -163,71 +158,75 @@ void sudokuBoard::populateBoard() {
   current_board[0][0]=current_board[3][2]=current_board[6][1]=
     current_board[2][3]=current_board[5][5]=current_board[8][4]=
     current_board[1][6]=current_board[4][8]=current_board[7][7] = temp[0][0]; 
-  cout << "temp[0][0]  " << temp[0][0] << endl;
 
   // (0,1) x   
   current_board[1][0]=current_board[4][2]=current_board[7][1]=
     current_board[0][3]=current_board[3][5]=current_board[6][4]=
     current_board[2][6]=current_board[5][8]=current_board[8][7] = temp[0][1]; 
-  cout << "temp[0][1]  " << temp[0][1] << endl;
         
   // (0,2) x   
   current_board[2][0]=current_board[5][2]=current_board[8][1]=
     current_board[1][3]=current_board[4][5]=current_board[7][4]=
     current_board[0][6]=current_board[3][8]=current_board[6][7] = temp[0][2]; 
-  cout << "temp[0][2]  " << temp[0][2] << endl;
         
   // (1,0) x   
   current_board[0][1]=current_board[3][0]=current_board[6][2]=
     current_board[2][4]=current_board[5][3]=current_board[8][5]=
     current_board[1][7]=current_board[4][6]=current_board[7][8] = temp[1][0]; 
-  cout << "temp[1][0]  " << temp[1][0] << endl;
         
   // (1,1) x   
   current_board[1][1]=current_board[4][0]=current_board[7][2]=
     current_board[0][4]=current_board[3][3]=current_board[6][5]=
     current_board[2][7]=current_board[5][6]=current_board[8][8] = temp[1][1]; 
-  cout << "temp[1][1]  " << temp[1][1] << endl;
         
-  cout <<  "Current_board14 - " << current_board[1][4] << endl;
   // (1,2) x   
   current_board[2][1]=current_board[5][0]=current_board[8][2]=  
     current_board[4][3]=current_board[7][5]=current_board[0][7]=
     current_board[3][6]=current_board[1][4]=current_board[6][8] = temp[1][2];
-  cout << "temp[1][2]  " << temp[1][2] << endl;
-  cout <<  "Current_board14 - " << current_board[1][4] << endl;
-  cout << "Current_board18 - " << current_board[1][8] << endl;
         
   // (2,0) x   
   current_board[0][2]=current_board[3][1]=current_board[6][0]=      
     current_board[2][5]=current_board[5][4]=current_board[8][3]=
     current_board[4][7]=current_board[7][6]=current_board[1][8] = temp[2][0];
-  cout << "temp[2][0]  " << temp[2][0] << endl;
-  cout <<"Current_board18 - " << current_board[1][8] << endl;
         
   // (2,1) x   
   current_board[1][2]=current_board[4][1]=current_board[7][0]=
     current_board[0][5]=current_board[3][4]=current_board[6][3]=
     current_board[2][8]=current_board[5][7]=current_board[8][6] = temp[2][1]; 
-  cout << "temp[2][1]  " << temp[2][1] << endl;
         
   // (2,2) x   
   current_board[2][2]=current_board[5][1]=current_board[8][0]=
     current_board[1][5]=current_board[4][4]=current_board[7][3]=
     current_board[0][8]=current_board[3][7]=current_board[6][6] = temp[2][2]; 
-  cout << "temp[2][2]  " << temp[2][2] << endl;
   
 
-  for (int i=0; i < BOARDSIZE; i++) {
+  /*for (int i=0; i < BOARDSIZE; i++) {
     for (int j=0; j< BOARDSIZE; j++) {
       cout << current_board[i][j] << " ";  
     }
     cout << endl;
-  }    
+  }  */  
 
   return;
 }
 
+
+void sudokuBoard::obfuscateBoard() { 
+
+  switch( getDifficulty() ) {
+    case (1): cout << "\n\033[1;32mNew Easy Puzzle\033[0m" << endl;
+              break;
+    case (2): cout << "\n\033[1;32mNew Medium Puzzle\033[0m" << endl;
+              break;
+    case (3): cout << "\n\033[1;32mNew Hard Puzzle\033[0m" << endl;
+              break;
+    case (4): cout << "\n\033[1;32mNew Expert Puzzle\033[0m" << endl;
+              break;
+    default: return;
+  }          
+
+  return; 
+}
 
 /*-------------------------[ Board Update ]-------------------------------*/
 
@@ -248,38 +247,6 @@ int sudokuBoard::update() {
   return 1;
 }
 
-
-int* sudokuBoard::getUpdate(int arrayPtr[3]) {
-
-  // Get the updated x position for the update
-  cout << "New position (X): ";
-  cin >> arrayPtr[0];
-  while ( (arrayPtr[0] > 9) || (arrayPtr[0] < 1) ) {
-    cout << "\033[1;31mOut of Bounds, please re-enter\033[0m"<< endl;
-    cout << "New position (X): ";
-    cin >> arrayPtr[0];
-  }
-
-  // Get the updated y position for the update
-  cout << "New position (Y): ";
-  cin >> arrayPtr[1];
-  while ( (arrayPtr[1] > 9) || (arrayPtr[1] < 1) ) {
-    cout << "\033[1;31mOut of Bounds, please re-enter\033[0m"<< endl;
-    cout << "New position (Y): ";
-    cin >> arrayPtr[1];
-  }
-
-
-  cout << "New Value: ";
-  cin >> arrayPtr[2];
-  while ( (arrayPtr[2] > 9) || (arrayPtr[2] < 1) ) {
-    cout << "\033[1;31mOut of Bounds, please re-enter\033[0m"<< endl;
-    cout << "New value: ";
-    cin >> arrayPtr[2];
-  }
-
-  return arrayPtr;
-}                
 
 
 /*--------------------------[ Actions ]----------------------------------*/
@@ -324,4 +291,56 @@ int sudokuBoard::actions() {
         break;
   }
   return true;
+}
+
+ 
+int* sudokuBoard::getUpdate(int arrayPtr[3]) {
+
+  // Get the updated x position for the update
+  cout << "New position (X): ";
+  cin >> arrayPtr[0];
+  while ( (arrayPtr[0] > 9) || (arrayPtr[0] < 1) ) {
+    cout << "\033[1;31mOut of Bounds, please re-enter\033[0m"<< endl;
+    cout << "New position (X): ";
+    cin >> arrayPtr[0];
+  }
+
+  // Get the updated y position for the update
+  cout << "New position (Y): ";
+  cin >> arrayPtr[1];
+  while ( (arrayPtr[1] > 9) || (arrayPtr[1] < 1) ) {
+    cout << "\033[1;31mOut of Bounds, please re-enter\033[0m"<< endl;
+    cout << "New position (Y): ";
+    cin >> arrayPtr[1];
+  }
+
+
+  cout << "New Value: ";
+  cin >> arrayPtr[2];
+  while ( (arrayPtr[2] > 9) || (arrayPtr[2] < 1) ) {
+    cout << "\033[1;31mOut of Bounds, please re-enter\033[0m"<< endl;
+    cout << "New value: ";
+    cin >> arrayPtr[2];
+  }
+
+  return arrayPtr;
+}                
+ 
+
+int sudokuBoard::getDifficulty() {
+
+  int choice;
+
+  cout << "\nDifficulty?    (1) Easy    (2) Medium    (3) Hard    (4) Expert" <<endl;
+  cout << "\tChoice: ";
+  cin >>  choice;
+  while ( (choice > 4) || (choice < 1) ) {
+    cout << "\033[1;31mOut of Bounds, please re-enter\033[0m"<< endl;
+    cout << "/tDifficulty? (1) Easy\t(2) Medium\t(3) Hard\t(4) Expert" <<endl;
+    cout << "\tChoice: ";
+    cin >>  choice;
+  }
+    
+  return choice;
+
 }
