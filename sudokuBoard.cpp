@@ -275,9 +275,17 @@ int* sudokuBoard::getUpdate(int arrayPtr[3]) {
 /*--------------------------[ Actions ]----------------------------------*/
 
 int sudokuBoard::actions() {
-  int option;
+  char optBuffer[80];
+  int option = 0;
   cout<<"\n\tAction: ";
-  cin >> option;
+  cin >> optBuffer;
+  if ( !isdigit(optBuffer[0]) ) {
+    cout << "\n\t\tNot a number ==>  Please try again" << endl;
+    actions();
+  }
+  else 
+    option = atoi (optBuffer);
+
 
   switch(option) {
     case(1):
@@ -301,7 +309,7 @@ int sudokuBoard::actions() {
         sleep(1);
         return EXIT_END; // ( Successful finish of the program)
     default: 
-        cout << "\n\033[1;31Incorrect option entered! Try again\033[0m\n" << endl;
+        cout << "\n\033[1;31mIncorrect option entered! Try again\033[0m\n" << endl;
         return actions();
         break;
   }
