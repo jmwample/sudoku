@@ -14,6 +14,7 @@
 #include <unistd.h>
 
 #define BOARDSIZE 9
+#define EXIT_END 3
 
 using namespace std;
 
@@ -50,6 +51,9 @@ public:
   ~sudokuBoard() { }
 
   void displayBoard(ostream& out) const;
+
+
+  void displayStart(ostream& out) const;
 
 
   int update();
