@@ -29,8 +29,8 @@ void sudokuBoard::displayBoard(ostream& out) const {
     
       // print number
       out << " ";
-      if (current_board[i][j] > 0) 
-        out << current_board[i][j];
+      if (display_board[i][j] > 0) 
+        out << display_board[i][j];
       else            
         out << " ";   
         
@@ -123,10 +123,13 @@ void sudokuBoard::newBoard() {
   obfuscateBoard();
   if ( isSolvable() ) {
     isCreated = true;
-    isSolved = true;
+    isSolved = false;
   } 
   else 
     newBoard();
+
+  
+  
 }
  
 
@@ -142,7 +145,6 @@ int myrandom (int i) { return rand()%i;}
 void sudokuBoard::populateBoard() { 
   int temp[3][3];
   vector<int> nums;
-
 
   for (int i=1; i<10; ++i) nums.push_back(i); // 1 2 3 4 5 6 7 8 9
 
@@ -200,12 +202,6 @@ void sudokuBoard::populateBoard() {
     current_board[0][8]=current_board[3][7]=current_board[6][6] = temp[2][2]; 
   
 
-  /*for (int i=0; i < BOARDSIZE; i++) {
-    for (int j=0; j< BOARDSIZE; j++) {
-      cout << current_board[i][j] << " ";  
-    }
-    cout << endl;
-  }  */  
 
   return;
 }
@@ -213,17 +209,44 @@ void sudokuBoard::populateBoard() {
 
 void sudokuBoard::obfuscateBoard() { 
 
+  vector <int> options;
+  for (int i=1; i<11; ++i) options.push_back(i); // 1 2 3 4 5 6 7 8 9 10
+  int percent = 5;
+  int curr_opt = 0;
+  int count = 0;
+
+  for (int i = 0; i<BOARDSIZE; i++) {
+    for (int j = 0; j<BOARDSIZE; j++) {
+      display_board[i][j] = current_board[i][j];
+    }
+  }
+
   switch( getDifficulty() ) {
     case (1): cout << "\n\033[1;32mNew Easy Puzzle\033[0m" << endl;
+              percent = 6;
               break;
     case (2): cout << "\n\033[1;32mNew Medium Puzzle\033[0m" << endl;
+              percent = 5;
               break;
     case (3): cout << "\n\033[1;32mNew Hard Puzzle\033[0m" << endl;
+              percent = 4;
               break;
     case (4): cout << "\n\033[1;32mNew Expert Puzzle\033[0m" << endl;
+              percent = 3;
               break;
     default: return;
   }          
+
+
+
+  while (count < BOARDSIZE*BOARDSIZE) {
+    random_shuffle ( options.begin(), options.end(), myrandom );
+    curr_opt = options.back();
+    if ( curr_opt > percent ) {
+      display_board[count/BOARDSIZE][count%BOARDSIZE] = 0;
+    }
+    count++;
+  }
 
   return; 
 }
@@ -231,7 +254,7 @@ void sudokuBoard::obfuscateBoard() {
 /*-------------------------[ Board Update ]-------------------------------*/
 
 void sudokuBoard::updateBoard(int PosX, int PosY, int value) {
-  current_board[PosY - 1][PosX - 1] = value;
+  display_board[PosY - 1][PosX - 1] = value;
 }
       
 

@@ -12,6 +12,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
+#include <random> 
 
 #define BOARDSIZE 9
 #define EXIT_END 3
@@ -26,6 +27,7 @@ using namespace std;
 class sudokuBoard {
 private:
   int current_board[BOARDSIZE][BOARDSIZE];
+  int display_board[BOARDSIZE][BOARDSIZE];
   bool isCreated = false;
   bool isSolved = false;
   
@@ -44,9 +46,11 @@ private:
 public:
     
   sudokuBoard() {
+    // Fill in the Game board and the Display board
     for (int i=0; i<BOARDSIZE; i++){
       for (int j=0; j<BOARDSIZE; j++) {
         current_board[i][j] = 0;
+        display_board[i][j] = 0;
       }
     }
   }
