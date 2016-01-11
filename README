@@ -3,3 +3,12 @@ TODO:
     * Difficulty
     * Check
     * obfuscate
+    
+
+
+Altscreens using the ncurses library!
+http://stackoverflow.com/questions/12919803/c-program-taking-control-of-terminal-window
+
+https://viget.com/extend/game-programming-in-c-with-the-ncurses-library
+
+https://developer.apple.com/library/mac/documentation/Darwin/Reference/ManPages/man3/ncurses.3x.html
